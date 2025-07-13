@@ -4,48 +4,39 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Raycast extension that appears to be related to projj (project directory management). The extension currently has a single command "clone" that copies the current date to the clipboard.
+This is a Raycast extension for [projj](https://github.com/popomore/projj), a local project management tool. The extension provides two main commands:
+
+1. **List Projects** (`src/list.tsx`): Browse all projects managed by projj with actions to open in Cursor, Terminal, and Finder
+2. **Clone Repository** (`src/clone.tsx`): Clone Git repositories directly to projj-managed directories
 
 ## Development Commands
 
-- `pnpm run dev` or `ray develop` - Start development mode with hot reloading
-- `pnpm run build` or `ray build` - Build the extension for production
-- `pnpm run lint` or `ray lint` - Run ESLint to check code quality
-- `pnpm run fix-lint` or `ray lint --fix` - Automatically fix linting issues
-- `pnpm run publish` or `npx @raycast/api@latest publish` - Publish extension to Raycast Store
+- `pnpm run dev` - Start development mode with hot reload
+- `pnpm run build` - Build the extension for production
+- `pnpm run lint` - Run ESLint to check code quality
+- `pnpm run fix-lint` - Auto-fix linting issues
+- `pnpm run publish` - Publish to Raycast Store
 
-## Architecture & Structure
+## Architecture
 
-### Project Structure
-- `src/` - Source code directory
-  - `clone.ts` - Main command implementation (currently copies date to clipboard)
-- `assets/` - Extension assets (icons, images)
-- `package.json` - Raycast extension manifest and dependencies
-- `tsconfig.json` - TypeScript configuration
-- `eslint.config.js` - ESLint configuration using Raycast's preset
+### Core Files
+- `src/utils.ts`: Contains all shared utilities including projj config/cache loading, external app integration (Cursor, Warp terminal), and project metadata extraction
+- `src/const.ts`: SVG icon definitions for UI elements
+- `src/list.tsx`: Main project listing interface with action panel
+- `src/clone.tsx`: Repository cloning form with environment validation
 
-### Key Technologies
-- **Raycast API** (`@raycast/api`) - Core extension framework
-- **TypeScript** - Primary language with strict mode enabled
-- **ESLint** - Code linting with Raycast's configuration preset
-- **pnpm** - Package manager (based on presence of pnpm-lock.yaml)
+### Key Concepts
+- **projj Integration**: Reads from `~/.projj/config.json` and `~/.projj/cache.json` 
+- **External Apps**: Opens projects in Cursor (via `code` command) and Warp terminal
+- **Environment Validation**: Checks for projj installation and configuration before allowing operations
+- **Project Metadata**: Extracts owner names from Git URLs and file paths for better project identification
 
-### Extension Configuration
-The extension is configured in `package.json` with:
-- Single command "clone" in no-view mode
-- ES2023 target with CommonJS modules
-- Strict TypeScript configuration
-- React JSX support for potential UI components
+### Data Flow
+1. Extensions check projj installation and config on startup
+2. Cache data is loaded from `~/.projj/cache.json` and parsed into `ProjjCacheItem[]`
+3. UI displays projects with actions that execute shell commands via `execAsync`
 
-## Development Notes
-
-- The current implementation in `clone.ts` is a placeholder that copies the current date to clipboard
-- The extension uses Raycast's standard tooling (`ray` CLI) for development and building
-- ESLint is configured with Raycast's official preset for consistent code style
-- The project appears to be in early development stage based on the minimal implementation
-
-
-## Docs
-
-- Raycast: https://developers.raycast.com/
-- Projj: https://github.com/popomore/projj
+## Dependencies
+- `@raycast/api`: Core Raycast extension API
+- `@raycast/utils`: Additional Raycast utilities
+- Uses Node.js built-ins: `fs`, `path`, `os`, `child_process`
