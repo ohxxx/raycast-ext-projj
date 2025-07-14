@@ -9,9 +9,10 @@ import {
   loadProjjConfig,
   openWithCursor,
   execAsync,
-  getDefaultShell
+  getDefaultShell,
+  openInTerminal
 } from "./utils";
-import { FolderIcon } from "./const";
+import { FolderIcon, TerminalIcon } from "./const";
 
 function EnvironmentCheck({ onEnvironmentReady }: { onEnvironmentReady: () => void }) {
   const [isChecking, setIsChecking] = useState(true);
@@ -167,6 +168,11 @@ function PostCloneActions({ projectPath, projectName }: { projectPath: string; p
     pop();
   }
 
+  async function handleOpenInTerminal() {
+    await openInTerminal(projectPath);
+    pop();
+  }
+
   return (
     <List>
       <List.Section title={`${projectName} cloned successfully!`}>
@@ -179,6 +185,22 @@ function PostCloneActions({ projectPath, projectName }: { projectPath: string; p
               <Action
                 title="Open with Cursor"
                 onAction={handleOpenWithCursor}
+              />
+            </ActionPanel>
+          }
+        />
+        <List.Item
+          title="Open in Terminal"
+          subtitle="Open project folder in Terminal"
+          icon={{
+            source: TerminalIcon,
+            tintColor: { light: "black", dark: "white" }
+          }}
+          actions={
+            <ActionPanel>
+              <Action
+                title="Open in Terminal"
+                onAction={handleOpenInTerminal}
               />
             </ActionPanel>
           }
