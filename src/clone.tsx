@@ -190,22 +190,6 @@ function PostCloneActions({ projectPath, projectName }: { projectPath: string; p
           }
         />
         <List.Item
-          title="Open in Terminal"
-          subtitle="Open project folder in Terminal"
-          icon={{
-            source: TerminalIcon,
-            tintColor: { light: "black", dark: "white" }
-          }}
-          actions={
-            <ActionPanel>
-              <Action
-                title="Open in Terminal"
-                onAction={handleOpenInTerminal}
-              />
-            </ActionPanel>
-          }
-        />
-        <List.Item
           title="Open in Finder"
           subtitle="Open project folder in Finder"
           icon={{
@@ -218,6 +202,22 @@ function PostCloneActions({ projectPath, projectName }: { projectPath: string; p
                 title="Open in Finder"
                 target={projectPath}
                 application="Finder"
+              />
+            </ActionPanel>
+          }
+        />
+        <List.Item
+          title="Open in Terminal"
+          subtitle="Open project folder in Terminal"
+          icon={{
+            source: TerminalIcon,
+            tintColor: { light: "black", dark: "white" }
+          }}
+          actions={
+            <ActionPanel>
+              <Action
+                title="Open in Terminal"
+                onAction={handleOpenInTerminal}
               />
             </ActionPanel>
           }
