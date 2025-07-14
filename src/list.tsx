@@ -40,24 +40,36 @@ function ProjectItem({ project }: { project: ProjjCacheItem }) {
             />
             <Action.Open
               title="Open in Finder"
-              icon={FolderIcon}
+              icon={{
+                source: FolderIcon,
+                tintColor: { light: "black", dark: "white" }
+              }}
               target={project.name}
               application="Finder"
             />
             <Action
               title="Open in Terminal"
-              icon={TerminalIcon}
+              icon={{
+                source: TerminalIcon,
+                tintColor: { light: "black", dark: "white" }
+              }}
               onAction={handleOpenInTerminal}
             />
             <Action.CopyToClipboard
               title="Copy Path"
-              icon={CopyIcon}
+              icon={{
+                source: CopyIcon,
+                tintColor: { light: "black", dark: "white" }
+              }}
               content={project.name}
             />
             {project.url && (
               <Action.CopyToClipboard
                 title="Copy Git URL"
-                icon={GitIcon}
+                icon={{
+                  source: GitIcon,
+                  tintColor: { light: "black", dark: "white" }
+                }}
                 content={project.url}
               />
             )}

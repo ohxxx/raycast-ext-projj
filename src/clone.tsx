@@ -186,7 +186,10 @@ function PostCloneActions({ projectPath, projectName }: { projectPath: string; p
         <List.Item
           title="Open in Finder"
           subtitle="Open project folder in Finder"
-          icon={FolderIcon}
+          icon={{
+            source: FolderIcon,
+            tintColor: { light: "black", dark: "white" }
+          }}
           actions={
             <ActionPanel>
               <Action.Open
